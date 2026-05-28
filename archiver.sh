@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 logfile="archive.log"
+s3bucket="harsh-log-archives-2026"
 
 log() {
 	echo "$(date '+%Y-%m-%d %H:%M') $1" >> "$logfile"
@@ -44,5 +45,13 @@ then
 else
 	log "compression failed"
 	exit 1	
+fi
+
+if aws s3 cp "$archivepath" "s3://$s3bucket"
+then 
+	log "s3 upload successful"
+else
+	log "s3 upload failed"
+	exit 1
 fi
 
