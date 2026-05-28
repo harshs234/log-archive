@@ -1,5 +1,11 @@
 #!/bin/bash 
 
+logfile="archive.log"
+
+log() {
+	echo "$(date '+%Y-%m-%d %H:%M') $1" >> "$logfile"
+}
+
 #check if directory given by user or not
 if [ -z "$1" ]
 then
@@ -26,15 +32,17 @@ mkdir -p archives
 archivename="logs_$timestamp.tar.gz"
 archivepath="archives/$archivename"
 
+log "archive started for $sourcedir"
+
 #compress and store in the path
 tar -czf "$archivepath" "$sourcedir"
 
 #final check
 if [ $? -eq 0 ]
 then 
-	echo "compression successful"
+	log "compression successful"
 else
-	echo "there was an error"
+	log "compression failed"
 	exit 1	
 fi
 
