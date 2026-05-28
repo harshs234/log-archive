@@ -11,6 +11,7 @@ fi
 if [ ! -d "$1" ]
 then
 	echo "invalid directory... exiting"
+	exit 1
 fi
 
 #sourceDirectory given by user
